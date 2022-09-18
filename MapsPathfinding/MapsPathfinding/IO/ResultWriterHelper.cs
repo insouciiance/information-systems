@@ -37,7 +37,7 @@ public static class ResultWriterHelper
             return new()
             {
                 Text = GetPathSliceDistance().ToString("F2"),
-                Color = (255, 192, 203)
+                Color = (255, 165, 0)
             };
 
             float GetPathSliceDistance()

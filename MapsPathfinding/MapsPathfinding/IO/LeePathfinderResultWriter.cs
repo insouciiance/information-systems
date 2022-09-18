@@ -25,7 +25,7 @@ public class LeePathfinderResultWriter<TGrid, TCell, TCellEnumerator>
                 return new()
                 {
                     Text = wave.ToString(),
-                    Color = (0, (byte)(255 * opacity), (byte)(255 * opacity))
+                    Color = (0, (byte)(50 + 205 * opacity), (byte)(50 + 205 * opacity))
                 };
             }
         }
