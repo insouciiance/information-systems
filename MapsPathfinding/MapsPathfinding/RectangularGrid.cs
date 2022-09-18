@@ -16,26 +16,13 @@ public partial class RectangularGrid<TCell> : IGrid<TCell, RectangularGrid<TCell
 
     public RectangularGrid(int width, int height, IEnumerable<TCell> cells)
     {
-        HashSet<(int, int)> providedPositions = new();
         _cells = new TCell[height, width];
 
         foreach (var cell in cells)
-        {
             _cells[cell.X, cell.Y] = cell;
-            providedPositions.Add((cell.X, cell.Y));
-        }
 
         Width = width;
         Height = height;
-
-        for (int i = 0; i < Height; i++)
-        {
-            for (int j = 0; j < Width; j++)
-            {
-                if (!providedPositions.Contains((i, j)))
-                    _cells[i, j] = TCell.CreateInstance(i, j);
-            }
-        }
     }
 
     public TCell GetCell(int x, int y)

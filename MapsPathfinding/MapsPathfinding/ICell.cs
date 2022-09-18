@@ -8,6 +8,4 @@ public interface ICell<TCell>
     int Y { get; }
 
     bool IsBlocker { get; }
-
-    static abstract TCell CreateInstance(int x, int y);
 }
