@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 namespace MapsPathfinding.Pathfinders;
 
-public class LeePathfinder<TGrid, TCell, TCellEnumerator> 
+public class LeePathfinder<TGrid, TCell, TCellEnumerator>
     : IGridPathfinder<TGrid, TCell, TCellEnumerator, LeePathfinder<TGrid, TCell, TCellEnumerator>.LeePathfinderResult>
     where TGrid : IGrid<TCell, TCellEnumerator>
     where TCell : ICell<TCell>
@@ -86,16 +86,13 @@ public class LeePathfinder<TGrid, TCell, TCellEnumerator>
 
         bool IsCellVisited(TCell cell)
         {
+            if (pathGraph[0].ContainsKey(cell))
+                return true;
+
             foreach (var waveGraph in pathGraph.Values)
             {
-                foreach (var (key, value) in waveGraph)
-                {
-                    if (EqualityComparer<TCell>.Default.Equals(cell, key))
-                        return true;
-
-                    if (EqualityComparer<TCell>.Default.Equals(cell, value))
-                        return true;
-                }
+                if (waveGraph.ContainsKey(cell))
+                    return true;
             }
 
             return false;
@@ -111,7 +108,7 @@ public class LeePathfinder<TGrid, TCell, TCellEnumerator>
         public TCell Start { get; init; }
 
         public TCell End { get; init; }
-     
+
         public ImmutableArray<TCell> Path { get; init; }
     }
 }

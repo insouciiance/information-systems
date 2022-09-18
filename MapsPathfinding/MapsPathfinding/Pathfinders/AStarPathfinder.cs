@@ -74,7 +74,7 @@ public class AStarPathfinder<TGrid, TCell, TCellEnumerator>
 
                 foreach (var (_, info) in queue)
                 {
-                    if (best is null || info.ElapsedCost < best.ElapsedCost)
+                    if (best is null || info.TotalCost < best.TotalCost)
                         best = info;
                 }
 

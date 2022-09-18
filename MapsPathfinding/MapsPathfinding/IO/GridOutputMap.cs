@@ -20,12 +20,12 @@ public class GridOutputMap
     public void SetCell(int x, int y, GridMapCell cell)
     {
         ResizeIfNeeded(x, y);
-        _cells[x, y] = cell;
+        _cells[y, x] = cell;
     }
 
     public bool TryGetCell(int x, int y, out GridMapCell cell)
     {
-        if (_cells[x, y] is GridMapCell notNull)
+        if (_cells[y, x] is GridMapCell notNull)
         {
             cell = notNull;
             return true;
@@ -35,16 +35,16 @@ public class GridOutputMap
         return false;
     }
 
-    private void ResizeIfNeeded(int x, int y)
+    private void ResizeIfNeeded(int width, int height)
     {
         int newWidth = Width;
         int newHeight = Height;
 
-        if (x >= Height)
-            newHeight = x;
+        if (height >= Height)
+            newHeight = height;
 
-        if (y >= Width)
-            newWidth = y;
+        if (width >= Width)
+            newWidth = width;
 
         if ((newWidth, newHeight) == (Width, Height))
             return;

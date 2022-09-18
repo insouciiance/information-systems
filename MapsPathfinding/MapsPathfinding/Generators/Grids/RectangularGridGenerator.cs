@@ -15,7 +15,7 @@ public class RectangularGridGenerator<TCell, TCellGenerator>
         for (int i = 0; i < height; i++)
         {
             for (int j = 0; j < width; j++)
-                cells.Add(TCellGenerator.Generate(i, j));
+                cells.Add(TCellGenerator.Generate(j, i));
         }
 
         return new RectangularGrid<TCell>(width, height, cells);

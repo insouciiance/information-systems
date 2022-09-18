@@ -17,31 +17,35 @@ public static class GenerationHelper
         where TCellGenerator : ICellGenerator<TCell>
     {
         TGrid grid = TGridGenerator.Generate(width, height);
+
+        double minDistance = Math.Sqrt(Math.Pow(width, 2) + Math.Pow(height, 2)) * 0.6f;
         
         TCell start;
         TCell end;
 
-        while (true)
+        do
         {
-            var (x, y) = GenerateRandomPosition();
+            while (true)
+            {
+                var (x, y) = GenerateRandomPosition();
 
-            if (!(start = grid.GetCell(x, y)).IsBlocker)
-                break;   
-        }
+                if (!(start = grid.GetCell(x, y)).IsBlocker)
+                    break;
+            }
 
-        while (true)
-        {
-            var (x, y) = GenerateRandomPosition();
+            while (true)
+            {
+                var (x, y) = GenerateRandomPosition();
 
-            if (!(end = grid.GetCell(x, y)).IsBlocker && !EqualityComparer<TCell>.Default.Equals(start, end))
-                break;
-        }
+                if (!(end = grid.GetCell(x, y)).IsBlocker && !EqualityComparer<TCell>.Default.Equals(start, end))
+                    break;
+            }
+        } while (IsDistanceSufficient());
 
         return (grid, start, end);
 
-        (int X, int Y) GenerateRandomPosition()
-        {
-            return (_random.Next(width), _random.Next(height));
-        }
+        (int X, int Y) GenerateRandomPosition() => (_random.Next(width), _random.Next(height));
+
+        bool IsDistanceSufficient() => Math.Sqrt(Math.Pow(start.X - end.X, 2) + Math.Pow(start.Y - end.Y, 2)) < minDistance;
     }
 }

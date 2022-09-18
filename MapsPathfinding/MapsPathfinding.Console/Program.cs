@@ -7,7 +7,9 @@ using MapsPathfinding.IO.GridMapWriters;
 using MapsPathfinding.Pathfinders;
 
 var (grid, start, end) = GenerationHelper.GenerateGrid<RectangularGrid<Cell>, Cell, RectangularGrid<Cell>.Enumerator,
-    RectangularGridGenerator<Cell, CellGenerator>, CellGenerator>(100, 100);
+    RectangularGridGenerator<Cell, CellGenerator>, CellGenerator>(3, 3);
+
+start = grid.GetCell(1, 0);
 
 var leeResult = new LeePathfinder<RectangularGrid<Cell>, Cell, RectangularGrid<Cell>.Enumerator>(grid).GetPathResult(start, end);
 GridOutputMap leeMap = LeePathfinderResultWriter<RectangularGrid<Cell>, Cell, RectangularGrid<Cell>.Enumerator>.Write(leeResult);

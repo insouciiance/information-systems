@@ -34,7 +34,7 @@ public class BitmapGridMapWriter : IGridMapWriter
         for (int i = 0; i < map.Height; i++)
         {
             for (int j = 0; j < map.Width; j++)
-                SetBlock(i, j);
+                SetBlock(j, i);
         }
 
         string extension = _imageFormat.ToString().ToLowerInvariant();
@@ -46,9 +46,9 @@ public class BitmapGridMapWriter : IGridMapWriter
             if (!map.TryGetCell(x, y, out var cell))
                 return;
 
-            for (int i = blockSize * x; i < blockSize * (x + 1); i++)
+            for (int i = blockSize * y; i < blockSize * (y + 1); i++)
             {
-                for (int j = blockSize * y; j < blockSize * (y + 1); j++)
+                for (int j = blockSize * x; j < blockSize * (x + 1); j++)
                     bitmap.SetPixel(j, i, Color.FromArgb(cell.Color.R, cell.Color.G, cell.Color.B));
             }
         }

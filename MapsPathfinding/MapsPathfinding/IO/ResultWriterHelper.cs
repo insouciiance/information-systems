@@ -16,10 +16,10 @@ public static class ResultWriterHelper
             {
                 TCell cell = result.Grid.GetCell(j, i);
 
-                if (map.TryGetCell(i, j, out _))
+                if (map.TryGetCell(j, i, out _))
                     continue;
 
-                map.SetCell(i, j, GetDefaultCell(cell));
+                map.SetCell(j, i, GetDefaultCell(cell));
             }
         }
 

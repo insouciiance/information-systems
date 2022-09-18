@@ -8,6 +8,8 @@ namespace MapsPathfinding;
 public partial class RectangularGrid<TCell> : IGrid<TCell, RectangularGrid<TCell>.Enumerator>
     where TCell : ICell<TCell>
 {
+    private const float SQRT_2 = 1.41421356237f;
+
     private readonly TCell[,] _cells;
 
     public int Width { get; }
@@ -19,7 +21,7 @@ public partial class RectangularGrid<TCell> : IGrid<TCell, RectangularGrid<TCell
         _cells = new TCell[height, width];
 
         foreach (var cell in cells)
-            _cells[cell.X, cell.Y] = cell;
+            _cells[cell.Y, cell.X] = cell;
 
         Width = width;
         Height = height;
@@ -37,7 +39,7 @@ public partial class RectangularGrid<TCell> : IGrid<TCell, RectangularGrid<TCell
 
     public float GetCost(TCell lhs, TCell rhs)
     {
-        return lhs.X != rhs.X ^ lhs.Y != rhs.Y ? 1 : 1.42f;
+        return lhs.X != rhs.X ^ lhs.Y != rhs.Y ? 1 : SQRT_2;
     }
 
     public struct Enumerator : IEnumerator<TCell>

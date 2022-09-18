@@ -12,7 +12,7 @@ public class StringBuilderMapWriter : IGridMapWriter
         {
             for (int j = 0; j < map.Width; j++)
             {
-                if (map.TryGetCell(i, j, out var cell))
+                if (map.TryGetCell(j, i, out var cell))
                 {
                     Builder.Append($"{cell.Text, -5}");
                     continue;
