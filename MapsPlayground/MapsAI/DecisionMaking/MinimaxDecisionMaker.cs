@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.InteropServices;
 using MapsAI.Extensions;
 using MapsPathfinding;
 using MapsPathfinding.Extensions;
@@ -52,7 +53,7 @@ public class MinimaxDecisionMaker<TCell> : IDecisionMaker<TCell>
 
         Minimax(initialPositions, PlayerKind.Ally, _depth, out var state);
 
-        return state[_players.First(p => p.Kind == PlayerKind.Ally)];
+        return state[ally];
 
         float Minimax(
             Dictionary<Player<TCell>, TCell> cells,
@@ -62,22 +63,15 @@ public class MinimaxDecisionMaker<TCell> : IDecisionMaker<TCell>
         {
             state = cells;
 
-            if (EqualityComparer<TCell>.Default.Equals(cells[ally], Board.Destination))
-                return float.MaxValue / ((_depth + 1) / (depth + 1));
-
-            if (cells.Any(e => !e.Key.Equals(ally) && EqualityComparer<TCell>.Default.Equals(e.Value, cells[ally])))
-                return 0;
-
-            if (depth == 0)
-                return _evaluationFunction.Invoke(Board, cells);
+            if (TryEvaluateTerminalNode(ally, cells, depth, out float evaluation))
+                return evaluation;
 
             float best = kind == PlayerKind.Ally ? float.MinValue : float.MaxValue;
             Dictionary<Player<TCell>, TCell> bestState = cells;
 
             foreach (var childState in GetChildStates(cells, kind))
             {
-                float evaluation = Minimax(childState, kind.Inverse(), depth - 1, out _);
-
+                evaluation = Minimax(childState, kind.Inverse(), depth - 1, out _);
                 UpdateEvaluation(evaluation, childState);
             }
 
@@ -98,7 +92,31 @@ public class MinimaxDecisionMaker<TCell> : IDecisionMaker<TCell>
         }
     }
 
-    protected static IEnumerable<Dictionary<Player<TCell>, TCell>> GetChildStates(Dictionary<Player<TCell>, TCell> cells, PlayerKind kind)
+    protected bool TryEvaluateTerminalNode(Player<TCell> ally, Dictionary<Player<TCell>, TCell> cells, int depth, out float evaluation)
+    {
+        if (EqualityComparer<TCell>.Default.Equals(cells[ally], Board.Destination))
+        {
+            evaluation = float.MaxValue / ((_depth + 1f) / (depth + 1));
+            return true;
+        }
+
+        if (cells.Any(e => !e.Key.Equals(ally) && EqualityComparer<TCell>.Default.Equals(e.Value, cells[ally])))
+        {
+            evaluation = 0;
+            return true;
+        }
+
+        if (depth == 0)
+        {
+            evaluation = _evaluationFunction.Invoke(Board, cells);
+            return true;
+        }
+
+        evaluation = default;
+        return false;
+    }
+
+    protected static List<Dictionary<Player<TCell>, TCell>> GetChildStates(Dictionary<Player<TCell>, TCell> cells, PlayerKind kind)
     {
         List<Dictionary<Player<TCell>, TCell>> states = new() { new(cells) };
 
@@ -109,7 +127,7 @@ public class MinimaxDecisionMaker<TCell> : IDecisionMaker<TCell>
 
             List<Dictionary<Player<TCell>, TCell>> children = new();
 
-            foreach (var state in states)
+            foreach (var state in CollectionsMarshal.AsSpan(states))
             {
                 foreach (var playerMove in player.DecisionMaker.GetPossibleMoves(cell, state))
                 {

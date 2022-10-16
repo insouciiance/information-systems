@@ -6,15 +6,15 @@ using MapsPathfinding;
 
 namespace MapsAI.DecisionMaking;
 
-public class ABMinimaxDecisionMaker<TCell> : MinimaxDecisionMaker<TCell>
+public class NegamaxDecisionMaker<TCell> : MinimaxDecisionMaker<TCell>
     where TCell : ICell
 {
-    public ABMinimaxDecisionMaker(
+    public NegamaxDecisionMaker(
         GameBoard<TCell> board,
         IEnumerable<Player<TCell>> players,
-        int depth = DEFAULT_DEPTH,
+        int depth = 5,
         Func<GameBoard<TCell>, Dictionary<Player<TCell>, TCell>, float>? evaluationFunction = null)
-    : base(board, players, depth, evaluationFunction) { }
+        : base(board, players, depth, evaluationFunction) { }
 
     public override TCell MoveNext(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null)
     {
@@ -25,33 +25,28 @@ public class ABMinimaxDecisionMaker<TCell> : MinimaxDecisionMaker<TCell>
         foreach (var player in _players)
             initialPositions.Add(player, player.Cell);
 
-        Minimax(initialPositions, PlayerKind.Ally, _depth, out var state);
+        Negamax(initialPositions, PlayerKind.Ally, _depth, out var state);
 
         return state[ally];
 
-        float Minimax(
+        float Negamax(
             Dictionary<Player<TCell>, TCell> cells,
             PlayerKind kind,
             int depth,
-            out Dictionary<Player<TCell>, TCell> state,
-            float alpha = float.MinValue,
-            float beta = float.MaxValue)
+            out Dictionary<Player<TCell>, TCell> state)
         {
             state = cells;
 
             if (TryEvaluateTerminalNode(ally, cells, depth, out float evaluation))
-                return evaluation;
-
-            float best = kind == PlayerKind.Ally ? float.MinValue : float.MaxValue;
+                return evaluation * (kind == PlayerKind.Ally ? 1 : -1);
+ 
+            float best = float.MinValue;
             Dictionary<Player<TCell>, TCell> bestState = cells;
 
             foreach (var childState in GetChildStates(cells, kind))
             {
-                evaluation = Minimax(childState, kind.Inverse(), depth - 1, out _);
+                evaluation = Negamax(childState, kind.Inverse(), depth - 1, out _);
                 UpdateEvaluation(evaluation, childState);
-
-                if (beta <= alpha)
-                    break;
             }
 
             state = bestState;
@@ -59,19 +54,11 @@ public class ABMinimaxDecisionMaker<TCell> : MinimaxDecisionMaker<TCell>
 
             void UpdateEvaluation(float value, Dictionary<Player<TCell>, TCell> state)
             {
-                if (kind == PlayerKind.Ally)
+                if (best < -value)
                 {
-                    if (best < value)
-                        (best, bestState) = (value, state);
-
-                    alpha = Math.Max(alpha, value);
-                    return;
+                    best = -value;
+                    bestState = state;
                 }
-
-                if (best > value)
-                    (best, bestState) = (value, state);
-
-                beta = Math.Min(beta, value);
             }
         }
     }

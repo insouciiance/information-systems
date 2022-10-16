@@ -29,7 +29,7 @@ public static class GenerationHelper
 
         GameBoard<TCell> board = new(grid, players, destination);
 
-        Player<TCell> ally = GeneratePlayer(new ABMinimaxDecisionMaker<TCell>(board, players), PlayerKind.Ally, new[] { destination });
+        Player<TCell> ally = GeneratePlayer(new NegaScoutDecisionMaker<TCell>(board, players), PlayerKind.Ally, new[] { destination });
         players.Add(ally);
 
         for (int i = 0; i < aStarOpponents; i++)
