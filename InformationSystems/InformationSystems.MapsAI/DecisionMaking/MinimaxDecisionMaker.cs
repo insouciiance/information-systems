@@ -4,9 +4,9 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices;
 using InformationSystems.MapsAI.Extensions;
-using InformationSystems.MapsPathfinding;
-using InformationSystems.MapsPathfinding.Extensions;
-using InformationSystems.MapsPathfinding.Pathfinders;
+using InformationSystems.Graphs;
+using InformationSystems.Graphs.Extensions;
+using InformationSystems.Graphs.Pathfinders;
 
 namespace InformationSystems.MapsAI.DecisionMaking;
 
@@ -37,7 +37,7 @@ public class MinimaxDecisionMaker<TCell> : IDecisionMaker<TCell>
         _depth = depth;
     }
 
-    public virtual ImmutableArray<TCell> GetPossibleMoves(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null)
+    public virtual IEnumerable<TCell> GetPossibleMoves(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null)
     {
         return Board.Grid.GetAdjacentNonBlockers(cell);
     }
@@ -150,16 +150,17 @@ public class MinimaxDecisionMaker<TCell> : IDecisionMaker<TCell>
 
         float distanceSum = 1;
 
-        AStarPathfinder<TCell> pathfinder = new(board.Grid);
+        AStarPathfinder<TCell, IGrid<TCell>> pathfinder = new(board.Grid, board.Destination, destCell, RectangularGrid<TCell>.DefaultHeuristic);
 
-        float distanceToEnd = pathfinder.GetPathResult(board.Destination, destCell).Evaluate();
+        float distanceToEnd = pathfinder.GetPathResult().Evaluate();
 
         foreach (var (player, cell) in cells)
         {
             if (player.Equals(dest))
                 continue;
 
-            distanceSum *= pathfinder.GetPathResult(cell, destCell).Evaluate();
+            pathfinder = new(board.Grid, cell, destCell, RectangularGrid<TCell>.DefaultHeuristic);
+            distanceSum *= pathfinder.GetPathResult().Evaluate();
         }
 
         return distanceToEnd > 0 ? distanceSum / distanceToEnd : float.MaxValue;

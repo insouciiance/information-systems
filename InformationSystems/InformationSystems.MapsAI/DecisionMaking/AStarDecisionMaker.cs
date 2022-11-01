@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using InformationSystems.MapsPathfinding;
-using InformationSystems.MapsPathfinding.Pathfinders;
+using InformationSystems.Graphs;
+using InformationSystems.Graphs.Pathfinders;
 
 namespace InformationSystems.MapsAI.DecisionMaking;
 
@@ -18,15 +18,16 @@ public class AStarDecisionMaker<TCell> : IDecisionMaker<TCell>
         _dest = dest;
     }
 
-    public ImmutableArray<TCell> GetPossibleMoves(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null)
+    public IEnumerable<TCell> GetPossibleMoves(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null)
     {
-        return ImmutableArray<TCell>.Empty.Add(MoveNext(cell, cells)!);
+        yield return MoveNext(cell, cells)!;
     }
 
     public TCell MoveNext(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null)
     {
-        AStarPathfinder<TCell> pathfinder = new(Board.Grid);
-        var result = pathfinder.GetPathResult(cell, cells is { } && cells.TryGetValue(_dest, out var c) ? c : _dest.Cell);
+        TCell dest = cells is { } && cells.TryGetValue(_dest, out var c) ? c : _dest.Cell;
+        AStarPathfinder<TCell, IGrid<TCell>> pathfinder = new(Board.Grid, cell, dest, RectangularGrid<TCell>.DefaultHeuristic);
+        var result = pathfinder.GetPathResult();
         return result.Path.Length > 0 ? result.Path[1] : default!;
     }
 }

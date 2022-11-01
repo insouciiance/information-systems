@@ -1,5 +1,5 @@
 ﻿using InformationSystems.MapsAI.DecisionMaking;
-using InformationSystems.MapsPathfinding;
+using InformationSystems.Graphs;
 
 namespace InformationSystems.MapsAI;
 

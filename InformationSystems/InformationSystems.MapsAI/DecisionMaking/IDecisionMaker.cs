@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using InformationSystems.MapsPathfinding;
+using InformationSystems.Graphs;
 
 namespace InformationSystems.MapsAI.DecisionMaking;
 
@@ -9,7 +9,7 @@ public interface IDecisionMaker<TCell>
 {
     GameBoard<TCell> Board { get; }
 
-    ImmutableArray<TCell> GetPossibleMoves(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null);
+    IEnumerable<TCell> GetPossibleMoves(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null);
 
     TCell MoveNext(TCell cell, Dictionary<Player<TCell>, TCell>? cells = null);
 }

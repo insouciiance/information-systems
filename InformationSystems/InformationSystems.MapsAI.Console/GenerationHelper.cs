@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using InformationSystems.MapsAI.DecisionMaking;
-using InformationSystems.MapsPathfinding;
-using InformationSystems.MapsPathfinding.Generators.Cells;
-using InformationSystems.MapsPathfinding.Generators.Grids;
+using InformationSystems.Graphs;
+using InformationSystems.Graphs.Generators.Cells;
+using InformationSystems.Graphs.Generators.Grids;
 using InformationSystems.Shared.Utils;
 
 namespace InformationSystems.MapsAI.Console;

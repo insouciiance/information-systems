@@ -4,11 +4,11 @@ using System.Threading;
 using InformationSystems.MapsAI;
 using InformationSystems.MapsAI.Console;
 using InformationSystems.MapsAI.DecisionMaking;
-using InformationSystems.MapsPathfinding;
-using InformationSystems.MapsPathfinding.Generators.Cells;
-using InformationSystems.MapsPathfinding.Generators.Grids;
-using InformationSystems.MapsPathfinding.IO;
-using InformationSystems.MapsPathfinding.IO.GridMapWriters;
+using InformationSystems.Graphs;
+using InformationSystems.Graphs.Generators.Cells;
+using InformationSystems.Graphs.Generators.Grids;
+using InformationSystems.Graphs.IO;
+using InformationSystems.Graphs.IO.GridMapWriters;
 
 Console.OutputEncoding = Encoding.Unicode;
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using InformationSystems.Graphs;
 using InformationSystems.MapsAI.Extensions;
-using InformationSystems.MapsPathfinding;
 
 namespace InformationSystems.MapsAI.DecisionMaking;
 
