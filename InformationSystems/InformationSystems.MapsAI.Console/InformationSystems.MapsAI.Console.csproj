@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InformationSystems.Shared\InformationSystems.Shared.csproj" />
+    <ProjectReference Include="..\InformationSystems.MapsAI\InformationSystems.MapsAI.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InformationSystems.Shared\InformationSystems.Shared.csproj" />
+    <ProjectReference Include="..\InformationSystems.MapsPathfinding\InformationSystems.MapsPathfinding.csproj" />
+  </ItemGroup>
+
+</Project>
