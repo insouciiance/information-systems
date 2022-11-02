@@ -15,4 +15,8 @@
     <ProjectReference Include="..\InformationSystems.Shared\InformationSystems.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SpanningTrees\" />
+  </ItemGroup>
+
 </Project>

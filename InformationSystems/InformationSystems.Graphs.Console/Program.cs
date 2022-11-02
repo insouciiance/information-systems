@@ -1,8 +1,13 @@
-﻿using InformationSystems.Graphs;
+﻿using System;
+using System.Collections.Immutable;
+using System.Linq;
+using InformationSystems.Graphs;
 using InformationSystems.Graphs.Extensions;
 using InformationSystems.Graphs.Pathfinders;
+using InformationSystems.Graphs.SpanningTrees;
 
-IGraph<int> graph = new AdjacencyGraph<int>(
+(int From, int To, float Cost)[] vertices =
+{
     (1, 8, 1),
     (2, 1, 1),
     (2, 3, 3),
@@ -23,11 +28,22 @@ IGraph<int> graph = new AdjacencyGraph<int>(
     (7, 8, 2),
     (8, 3, 2),
     (8, 4, 2),
-    (8, 7, 4));
+    (8, 7, 4)
+};
 
-DijkstraPathfinder<int, IGraph<int>> pathfinder = new(graph, 1);
+IGraph<int> directedGraph = new AdjacencyGraph<int>(true, vertices);
+DijkstraPathfinder<int, IGraph<int>> pathfinder = new(directedGraph, 1);
 
 foreach (var path in pathfinder.GetPathResult().Paths)
-{
-    System.Console.WriteLine($"{path.Start} - {path.End}: {string.Join("-", path.Path)} ({path.Evaluate()})");
-}
+    Console.WriteLine($"{path.Start} - {path.End}: {string.Join("-", path.Path)} ({path.Evaluate()})");
+
+Console.WriteLine();
+
+IGraph<int> undirectedGraph = new AdjacencyGraph<int>(false, vertices);
+PrimSpanningTreeConstructor<int, IGraph<int>> constructor = new(undirectedGraph);
+
+ImmutableArray<(int From, int To)> spanningTree = constructor.ConstructSpanningTree();
+foreach (var (from, to) in spanningTree)
+    Console.WriteLine($"{from}-{to}");
+
+Console.WriteLine($"Total cost: {spanningTree.Aggregate(0f, (acc, tuple) => acc + undirectedGraph.GetCost(tuple.From, tuple.To))}");

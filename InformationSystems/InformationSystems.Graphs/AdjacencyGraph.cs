@@ -10,7 +10,7 @@ public class AdjacencyGraph<T> : IGraph<T>
 
     private readonly T[] _vertices;
 
-    public AdjacencyGraph(params (T From, T To, float Cost)[] edges)
+    public AdjacencyGraph(bool directed = true, params(T From, T To, float Cost)[] edges)
     {
         HashSet<T> vertices = new();
 
@@ -24,8 +24,15 @@ public class AdjacencyGraph<T> : IGraph<T>
         _adjacencyMatrix = new float?[_vertices.Length, _vertices.Length];
 
         foreach (var (from, to, cost) in edges)
-            _adjacencyMatrix[Array.IndexOf(_vertices, from), Array.IndexOf(_vertices, to)] = cost;
-   
+        {
+            int fromIndex = Array.IndexOf(_vertices, from);
+            int toIndex = Array.IndexOf(_vertices, to);
+
+            _adjacencyMatrix[fromIndex, toIndex] = cost;
+
+            if (!directed)
+                _adjacencyMatrix[toIndex, fromIndex] = cost;
+        }
     }
 
     public float GetCost(T lhs, T rhs)
