@@ -30,7 +30,7 @@ public class AdjacencyGraph<T> : IGraph<T>
 
             _adjacencyMatrix[fromIndex, toIndex] = cost;
 
-            if (!directed)
+            if (!directed && (_adjacencyMatrix[toIndex, fromIndex] is not { } x || x > cost))
                 _adjacencyMatrix[toIndex, fromIndex] = cost;
         }
     }
