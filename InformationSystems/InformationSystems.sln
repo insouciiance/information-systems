@@ -19,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InformationSystems.Strings.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InformationSystems.LinearProgramming", "InformationSystems.LinearProgramming\InformationSystems.LinearProgramming.csproj", "{9C3D2EA5-D8AE-4B19-B809-8555AD441AA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationSystems.LinearProgramming.Console", "InformationSystems.LinearProgramming.Console\InformationSystems.LinearProgramming.Console.csproj", "{E975BA68-1372-4717-9F6F-E03FD5779F9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InformationSystems.LinearProgramming.Console", "InformationSystems.LinearProgramming.Console\InformationSystems.LinearProgramming.Console.csproj", "{E975BA68-1372-4717-9F6F-E03FD5779F9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationSystems.NonLinearProgramming", "InformationSystems.NonLinearProgramming\InformationSystems.NonLinearProgramming.csproj", "{4E2D6A3D-D944-47D4-ACAD-12C1A42ACD84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationSystems.NonLinearProgramming.Console", "InformationSystems.NonLinearProgramming.Console\InformationSystems.NonLinearProgramming.Console.csproj", "{8598751D-6C1A-4B79-BB1D-1D8E22C784BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{E975BA68-1372-4717-9F6F-E03FD5779F9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E975BA68-1372-4717-9F6F-E03FD5779F9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E975BA68-1372-4717-9F6F-E03FD5779F9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E2D6A3D-D944-47D4-ACAD-12C1A42ACD84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2D6A3D-D944-47D4-ACAD-12C1A42ACD84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2D6A3D-D944-47D4-ACAD-12C1A42ACD84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2D6A3D-D944-47D4-ACAD-12C1A42ACD84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8598751D-6C1A-4B79-BB1D-1D8E22C784BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8598751D-6C1A-4B79-BB1D-1D8E22C784BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8598751D-6C1A-4B79-BB1D-1D8E22C784BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8598751D-6C1A-4B79-BB1D-1D8E22C784BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

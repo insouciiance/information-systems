@@ -3,10 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Diagnostics\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
